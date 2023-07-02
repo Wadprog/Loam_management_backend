@@ -1,0 +1,3 @@
+{
+"api/**/*.(js|ts)":["npm run lint:api", " npm run test:api"]
+}

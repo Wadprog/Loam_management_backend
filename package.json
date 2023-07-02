@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": " echo \"test\" ",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint api/src/**/*.ts ",
+    "lint:fix": "eslint --fix api/src/**/*.ts ",
+    "lint:prettier": "prettier  --fix api/src/**/*.js*"
   },
   "keywords": [
     "loans"
@@ -16,7 +19,14 @@
     "commitizen": "^4.3.0",
     "concurrently": "^8.2.0",
     "cz-conventional-changelog": "^3.3.0",
-    "husky": "^8.0.0"
+    "eslint": "^8.44.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.3"
   },
   "config": {
     "commitizen": {

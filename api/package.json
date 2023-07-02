@@ -25,8 +25,8 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "test": "npm run lint && npm run compile && npm run jest",
-    "lint": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
+    "test:api": "echo \"Error: no test specified\" && exit 1",
+    "lint:api": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
     "start": "npm run compile && node lib/",
     "jest": "jest --forceExit",
     "compile": "shx rm -rf lib/ && tsc"
