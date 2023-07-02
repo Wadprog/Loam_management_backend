@@ -1,0 +1,14 @@
+{
+  "name": "prestamo_app",
+  "version": "1.0.0",
+  "description": "Multi-tenant loan management application ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test "
+  },
+  "keywords": [
+    "loans"
+  ],
+  "author": "Wadson Vaval",
+  "license": "MIT "
+}
