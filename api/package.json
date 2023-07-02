@@ -1,0 +1,49 @@
+{
+  "name": "api",
+  "description": "Api for multi tenant loan management application ",
+  "version": "0.0.0",
+  "homepage": "",
+  "private": true,
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Wadson Vaval",
+    "email": "vavalson@hotmail.com"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/",
+    "config": "config/"
+  },
+  "engines": {
+    "node": "^16.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint && npm run compile && npm run jest",
+    "lint": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
+    "dev": "ts-node-dev --no-notify src/",
+    "start": "npm run compile && node lib/",
+    "jest": "jest --forceExit",
+    "compile": "shx rm -rf lib/ && tsc"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ],
+    "ignore": []
+  },
+  "types": "lib/",
+  "devDependencies": {
+    "@types/bluebird": "^3.5.38",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/validator": "^13.7.17"
+  },
+  "dependencies": {
+    "feathers-sequelize": "^6.4.0"
+  }
+}
