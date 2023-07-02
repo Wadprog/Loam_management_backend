@@ -4,11 +4,15 @@
   "description": "Multi-tenant loan management application ",
   "main": "index.js",
   "scripts": {
-    "test": "test "
+    "test": "test ",
+    "prepare": "husky install"
   },
   "keywords": [
     "loans"
   ],
   "author": "Wadson Vaval",
-  "license": "MIT "
+  "license": "MIT ",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  }
 }
