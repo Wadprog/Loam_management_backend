@@ -1,0 +1,11 @@
+api.localhost {
+    reverse_proxy localhost:3030 {
+		header_up X-Forwarded-Host {host}
+	}
+}
+
+*.app.localhost {
+	reverse_proxy localhost:3030 {
+		header_up X-Forwarded-Host {host}
+	}
+}
