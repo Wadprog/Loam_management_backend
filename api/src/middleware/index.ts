@@ -1,6 +1,11 @@
-import { Application } from '../declarations';
-// Don't remove this comment. It's needed to format import lines nicely.
+import { Application } from '../declarations'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+import ValidCx from './is_valid_customer'
+const middlewares = [ValidCx]
+
 export default function (app: Application): void {
+  middlewares.forEach((middlewareContainer: any) => {
+    const middleware = middlewareContainer(app)
+    app.use(middleware)
+  })
 }

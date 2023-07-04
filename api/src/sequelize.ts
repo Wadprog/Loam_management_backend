@@ -1,33 +1,39 @@
-import { Sequelize } from 'sequelize';
-import { Application } from './declarations';
+import { Sequelize } from 'sequelize'
+import { Application } from './declarations'
 
 export default function (app: Application): void {
-  const connectionString = app.get('postgres');
-  const sequelize = new Sequelize(connectionString, {
-    dialect: 'postgres',
-    logging: false,
-    define: {
-      freezeTableName: true
-    }
-  });
-  const oldSetup = app.setup;
+  const dbSettings = app.get('dbSettings')
+  if (!dbSettings) {
+    throw new Error('No database settings')
+    process.exit(1)
+  }
 
-  app.set('sequelizeClient', sequelize);
+  const sequelize = dbSettings.url
+    ? new Sequelize(dbSettings.url)
+    : new Sequelize({
+        logging: false,
+        ...dbSettings,
+        seederStorge: 'sequelize'
+      })
+  const oldSetup = app.setup
+
+  app.set('sequelizeClient', sequelize)
 
   app.setup = function (...args): Application {
-    const result = oldSetup.apply(this, args);
-
-    // Set up data relationships
-    const models = sequelize.models;
-    Object.keys(models).forEach(name => {
-      if ('associate' in models[name]) {
-        (models[name] as any).associate(models);
-      }
-    });
+    const result = oldSetup.apply(this, args)
 
     // Sync to the database
-    app.set('sequelizeSync', sequelize.sync());
+    app.set('sequelizeSync', sequelize.sync({ alter: true }))
 
-    return result;
-  };
+    return result
+  }
+  function startSequelize() {
+    const { models } = sequelize
+    Object.keys(models).forEach((name) => {
+      if ('associate' in models[name]) {
+        ;(models[name] as any).associate(models)
+      }
+    })
+  }
+  app.set('startSequelize', startSequelize)
 }
