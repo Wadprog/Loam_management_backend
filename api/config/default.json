@@ -1,5 +1,8 @@
 {
   "host": "localhost",
+  "dbSettings": {
+    "dialect": "postgres"
+  },
   "port": 3030,
   "public": "../public/",
   "paginate": {
