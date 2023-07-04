@@ -2,6 +2,6 @@
   "watch": ["src"],
   "ext": ".ts,.js",
   "ignore": ["*.test"],
-  "exec": "ts-node-dev ./src/bin/www"
+  "exec": "ts-node-dev ./src/bin/index.ts"
 }
   

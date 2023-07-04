@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  api:
+    env_file:
+      - .env
+    container_name: prestamo_api_development
+    image: prestamo_api_dev:0.0.1
+
+    build:
+      context: ./api
+    ports:
+      - '3030:3030'
+    volumes:
+      - ./api:/app
+    environment:
+      - PORT=3030
+      - PGDATABASE=prestamo_utesa
+      - PGUSER=v_wadson
+      - PGPASSWORD=1111414
+      - PGHOST=prestamo_db
+      - DG_HOST=prestamo_db
+      - NODE_ENV=development
+      - REDIS_URL=redis://redis:6379/0
+    # command: ./docker-entrypoint.sh
+    depends_on:
+      - prestamo_db
+  prestamo_db:
+    container_name: prestamo_db
+    image: 'postgres:12'
+    ports:
+      - '5432:5432'
+    restart: always
+
+    environment:
+      - POSTGRES_USER=v_wadson
+      - POSTGRES_PASSWORD=1111414
+      - POSTGRES_DB=prestamo_utesa
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - preatamo_data:/var/lib/postgresql/data
+
+volumes:
+  preatamo_data: {}

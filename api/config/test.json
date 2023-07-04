@@ -1,1 +1,11 @@
-{}
+{
+  "dbSettings": {
+    "killConnections": true,
+    "username": "w_vaval",
+    "password": 1111414,
+    "host": "localhost",
+    "port": 5432,
+    "database": "utesa_prestamo",
+    "dialect": "postgres"
+  }
+}
