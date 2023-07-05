@@ -53,9 +53,8 @@ app.configure(services)
 // app.configure(channels);
 
 app.use('/test', (req: any, res: any) => {
-  const sbd = req.subdomains
   const subdomain = req.headers['x-forwarded-host'].split('.')[0]
-  console.log(sbd, subdomain)
+
   res.send(subdomain)
 })
 

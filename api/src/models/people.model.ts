@@ -2,37 +2,30 @@
 // for more of what you can do here.
 import { Sequelize, Model } from 'sequelize'
 
-export interface EmployeeInterface {
+export interface PersonInterface {
   id: string
-  active: boolean
-  username: string
-  password: string
+  given_name: string
+  familly_name: string
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
-  class Employee extends Model<EmployeeInterface> implements EmployeeInterface {
+  class Person extends Model<PersonInterface> implements PersonInterface {
     // eslint-disable-next-line prettier/prettier
 
     id!: string
 
     name!: string
 
-    active!: boolean
+    familly_name!: string
 
-    username!: string
-
-    password!: string
+    given_name!: string
 
     static associate(models: any): void {
-      
-      Employee.belongsToMany(models.Customers, {
-        through: 'employee_organization',
-        onDelete: 'CASCADE'
-      })
-      Employee.belongsTo(models.People, {})
+      // Person.belongsTo(models.Customer, {})
+      // Person.belongsTo(models.Person, {})
     }
   }
 
-  Employee.init(
+  Person.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -40,28 +33,23 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         primaryKey: true
       },
 
-      username: {
+      given_name: {
         type: DataTypes.STRING,
         allowNull: false
       },
 
-      password: {
+      familly_name: {
         type: DataTypes.STRING,
         allowNull: false
-      },
-
-      active: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true
       }
     },
 
     {
       sequelize,
-      modelName: 'Employees',
-      tableName: 'employees'
+      modelName: 'People',
+      tableName: 'people'
     }
   )
 
-  return Employee
+  return Person
 }

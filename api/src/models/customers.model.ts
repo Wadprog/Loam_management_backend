@@ -19,8 +19,12 @@ export default (sequelize: any, DataTypes: any) => {
     active!: boolean
 
     static associate(models: any): void {
-      // Friend.hasOne(models.User, { as: 'Requester' })
-      // Friend.hasOne(models.User, { as: 'User' })
+      Customer.hasMany(models.Employees, {
+        onDelete: 'CASCADE'
+      })
+      Customer.hasMany(models.Borrowers, {
+        onDelete: 'CASCADE'
+      })
     }
   }
 
@@ -32,8 +36,7 @@ export default (sequelize: any, DataTypes: any) => {
         primaryKey: true
       },
       name: {
-        type: DataTypes.STRING,
-        primaryKey: true
+        type: DataTypes.STRING
       },
 
       active: {
@@ -44,7 +47,8 @@ export default (sequelize: any, DataTypes: any) => {
 
     {
       sequelize,
-      modelName: 'customers'
+      modelName: 'Customers',
+      tableName: 'customers'
     }
   )
 
