@@ -1,28 +1,27 @@
-// Initializes the `clients ` service on path `/clients`
+// Initializes the `colateral` service on path `/colaterals`
 import { ServiceAddons } from '@feathersjs/feathers'
 import { Application } from '../../declarations'
-import { Clients } from './customers.class'
-import hooks from './customers.hooks'
+import { Colateral } from './colateral.class'
+import hooks from './colateral.hooks'
 
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    customers: Clients & ServiceAddons<any>
+    colaterals: Colateral & ServiceAddons<any>
   }
 }
 
 export default function (app: Application): void {
-  const sequelize = app.get('sequelizeClient')
   const options = {
-    Model: sequelize.models.Customers,
-    paginate: app.get('paginate')
+    paginate: app.get('paginate'),
+    Model: app.get('sequelizeClient').models.Colaterals
   }
 
   // Initialize our service with any options it requires
-  app.use('/customers', new Clients(options, app))
+  app.use('/colaterals', new Colateral(options, app))
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('customers')
+  const service = app.service('colaterals')
 
   service.hooks(hooks)
 }

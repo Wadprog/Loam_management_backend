@@ -2,51 +2,44 @@
 // for more of what you can do here.
 import { Model } from 'sequelize'
 
-export interface CustomerInterface {
+export interface MediaInterface {
   id: string
-  name: string
-  active: boolean
+  url: string
 }
 
 export default (sequelize: any, DataTypes: any) => {
-  class Customer extends Model<CustomerInterface> implements CustomerInterface {
+  class Media extends Model<MediaInterface> implements MediaInterface {
     // eslint-disable-next-line prettier/prettier
 
     id!: string
-
-    name!: string
-
-    active!: boolean
+    url!: string
 
     static associate(models: any): void {
-      // Friend.hasOne(models.User, { as: 'Requester' })
-      // Friend.hasOne(models.User, { as: 'User' })
+      Media.belongsToMany(models.Colaterals, { through: 'colaterals_media' })
     }
   }
 
-  Customer.init(
+  Media.init(
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
+      url: {
         type: DataTypes.STRING,
-        primaryKey: true
-      },
-
-      active: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true
+        validate: {
+          isUrl: true
+        }
       }
     },
 
     {
       sequelize,
-      modelName: 'customers'
+      modelName: 'Medias',
+      tableName: 'medias'
     }
   )
 
-  return Customer
+  return Media
 }
