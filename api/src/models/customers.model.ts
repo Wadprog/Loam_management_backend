@@ -22,8 +22,10 @@ export default (sequelize: any, DataTypes: any) => {
       Customer.hasMany(models.Employees, {
         onDelete: 'CASCADE'
       })
-      Customer.hasMany(models.Borrowers, {
+
+      Customer.hasMany(models.BorrowersOrganization, {
         onDelete: 'CASCADE'
+        
       })
     }
   }

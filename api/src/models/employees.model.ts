@@ -23,7 +23,6 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     password!: string
 
     static associate(models: any): void {
-      
       Employee.belongsToMany(models.Customers, {
         through: 'employee_organization',
         onDelete: 'CASCADE'
