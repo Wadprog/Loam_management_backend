@@ -1,7 +1,7 @@
 {
   "host": "localhost",
   "dbSettings": {
-    "dialect": "postgres"
+   "dialect": "SEQUELIZE_DIALECT"
   },
   "port": 3030,
   "public": "../public/",
