@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import Logger from '../../logger'
+import Logger from '../../utils/logger'
 import { Server } from 'http'
 export function normalizePort(val: string): number | string | null {
   const port = parseInt(val, 10)

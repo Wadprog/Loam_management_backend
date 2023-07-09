@@ -11,7 +11,7 @@ import { HookContext as FeathersHookContext } from '@feathersjs/feathers'
 /** Custom dependencies */
 import database from './models'
 import { Application } from './declarations'
-import logger from './logger'
+import logger from './utils/logger'
 import middleware from './middleware'
 import services from './services'
 import appHooks from './app.hooks'
