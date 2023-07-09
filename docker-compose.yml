@@ -12,32 +12,23 @@ services:
       - '3030:3030'
     volumes:
       - ./api:/app
-    environment:
-      - PORT=3030
-      - PGDATABASE=prestamo_utesa
-      - PGUSER=v_wadson
-      - PGPASSWORD=1111414
-      - PGHOST=prestamo_db
-      - DG_HOST=prestamo_db
-      - NODE_ENV=development
-      - REDIS_URL=redis://redis:6379/0
     # command: ./docker-entrypoint.sh
     depends_on:
       - prestamo_db
   prestamo_db:
-    container_name: prestamo_db
-    image: 'postgres:12'
-    ports:
-      - '5432:5432'
-    restart: always
-
+    image: mysql:8.0
+    restart: unless-stopped
     environment:
-      - POSTGRES_USER=v_wadson
-      - POSTGRES_PASSWORD=1111414
-      - POSTGRES_DB=prestamo_utesa
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - MYSQL_USER=$DB_USER
+      - MYSQL_DATABASE=$DB_DATABASE
+      - MYSQL_PASSWORD=$DB_PASSWORD
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
+    ports:
+      - '$DB_PORT:$LOCAL_DB_PORT'
     volumes:
-      - preatamo_data:/var/lib/postgresql/data
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
-  preatamo_data: {}
+  db: {}

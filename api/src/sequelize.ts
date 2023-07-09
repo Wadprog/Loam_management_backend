@@ -1,3 +1,4 @@
+import assign from 'lodash/assign'
 import { Sequelize } from 'sequelize'
 import { Application } from './declarations'
 
@@ -8,13 +9,9 @@ export default function (app: Application): void {
     process.exit(1)
   }
 
-  const sequelize = dbSettings.url
-    ? new Sequelize(dbSettings.url)
-    : new Sequelize({
-        logging: false,
-        ...dbSettings,
-        seederStorge: 'sequelize'
-      })
+  const settings = assign(dbSettings, { seederStorge: 'sequelize' }, { logging: false })
+
+  const sequelize = settings.url ? new Sequelize(settings.url, settings) : new Sequelize(settings)
   const oldSetup = app.setup
 
   app.set('sequelizeClient', sequelize)
