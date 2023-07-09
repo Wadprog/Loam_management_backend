@@ -1,11 +1,14 @@
 import assign from 'lodash/assign'
 import { Sequelize } from 'sequelize'
+
+/** Custom dependencies */
+import Logger from './utils/logger'
 import { Application } from './declarations'
 
 export default function (app: Application): void {
   const dbSettings = app.get('dbSettings')
   if (!dbSettings) {
-    throw new Error('No database settings')
+    Logger.error('No database settings')
     process.exit(1)
   }
 
