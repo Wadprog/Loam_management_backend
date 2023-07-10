@@ -18,6 +18,14 @@ import colateral from './colateral/colateral.service'
 
 import medias from './medias/medias.service'
 
+import permitions from './authorizations/authorizations.service'
+
+import roles from './roles/roles.service'
+
+import authorizationsroles from './authorizationsroles/authorizationsroles.service'
+
+import rolesTenant from './roles-tenant/roles-tenant.service'
+
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -31,4 +39,8 @@ export default function (app: Application): void {
   app.configure(loanReviews)
   app.configure(colateral)
   app.configure(medias)
+  app.configure(permitions)
+  app.configure(roles)
+  app.configure(authorizationsroles)
+  app.configure(rolesTenant)
 }
