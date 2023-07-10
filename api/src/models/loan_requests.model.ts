@@ -8,7 +8,7 @@ export interface LoanRequestsInterface {
   reviewer_id: number
   borrower_id: number
   request_amount: number
-  organization_id: number
+  tenant_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class LoanRequests extends Model<LoanRequestsInterface> implements LoanRequestsInterface {
@@ -18,12 +18,12 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     reviewer_id!: number
     borrower_id!: number
     request_amount!: number
-    organization_id!: number
+    tenant_id!: number
 
     static associate(models: any): void {
+      LoanRequests.belongsTo(models.Tenants)
       LoanRequests.belongsTo(models.Borrowers, {})
       LoanRequests.belongsTo(models.Employees, { as: 'reviewer' })
-      LoanRequests.belongsTo(models.Customers, { as: 'organization' })
     }
   }
 
@@ -60,12 +60,12 @@ export default (sequelize: Sequelize, DataTypes: any) => {
           key: 'id'
         }
       },
-      organization_id: {
+      tenant_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         references: {
-          model: 'customers',
+          model: 'tenants',
           key: 'id'
         }
       },

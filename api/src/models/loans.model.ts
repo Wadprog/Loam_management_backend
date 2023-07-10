@@ -27,13 +27,13 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     principal_debt!: number
     score!: number
 
-    static associate(models: any): void {
-      Loan.belongsToMany(models.Customers, {
-        through: 'loan_organization',
-        onDelete: 'CASCADE'
-      })
-      Loan.belongsTo(models.Borrowers, {})
-    }
+    // static associate(models: any): void {
+    //   Loan.belongsToMany(models.Tenants, {
+    //     through: 'loan_organization',
+    //     onDelete: 'CASCADE'
+    //   })
+    //   Loan.belongsTo(models.Borrowers, {})
+    // }
   }
 
   Loan.init(
