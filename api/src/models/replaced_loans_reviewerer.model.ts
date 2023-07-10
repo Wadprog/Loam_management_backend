@@ -1,10 +1,10 @@
-// See https://sequelize.org/master/manual/model-basics.html
-// for more of what you can do here.
 import { Sequelize, Model } from 'sequelize'
 
 export interface ReplacedLoansReviewerInterface {
-  reviewer_id: number
+  new_reviewer_id: number
+  previous_reviewer_id: number
   loan_request_id: number
+  modifier_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class ReplacedLoansReviewer
@@ -12,8 +12,10 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     implements ReplacedLoansReviewerInterface
   {
     // eslint-disable-next-line prettier/prettier
-    reviewer_id!: number
+    modifier_id!: number
+    new_reviewer_id!: number
     loan_request_id!: number
+    previous_reviewer_id!: number
 
     static associate(models: any): void {
       ReplacedLoansReviewer.belongsTo(models.LoanRequests, {
@@ -28,7 +30,24 @@ export default (sequelize: Sequelize, DataTypes: any) => {
 
   ReplacedLoansReviewer.init(
     {
-      reviewer_id: {
+      new_reviewer_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'employees',
+          key: 'id'
+        }
+      },
+      previous_reviewer_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'employees',
+          key: 'id'
+        }
+      },
+
+      modifier_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
