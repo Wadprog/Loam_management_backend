@@ -1,5 +1,3 @@
-// See https://sequelize.org/master/manual/model-basics.html
-// for more of what you can do here.
 import { Sequelize, Model } from 'sequelize'
 
 export interface ColateralsLoanReViewInterface {
@@ -20,10 +18,10 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     loan_review_id!: number
     max_estimated_value!: number
 
-    static associate(models: any): void {
-      ColateralsLoanReView.belongsTo(models.Borrowers, {})
-      ColateralsLoanReView.belongsTo(models.Customers, { as: 'organization' })
-    }
+    //   static associate(models: any): void {
+    //     ColateralsLoanReView.belongsTo(models.Borrowers, {})
+    //     ColateralsLoanReView.belongsTo(models.Customers, { as: 'organization' })
+    //   }
   }
 
   ColateralsLoanReView.init(
