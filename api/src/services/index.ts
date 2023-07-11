@@ -54,6 +54,12 @@ import alteredAddressNotification from './altered-address-notification/altered-a
 
 import previousAddress from './previous-address/previous-address.service';
 
+import phones from './phones/phones.service';
+
+import phoneTypes from './phone-types/phone-types.service';
+
+import phonesUser from './phones-user/phones-user.service';
+
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -85,4 +91,7 @@ export default function (app: Application): void {
   app.configure(addressBorrower);
   app.configure(alteredAddressNotification);
   app.configure(previousAddress);
+  app.configure(phones);
+  app.configure(phoneTypes);
+  app.configure(phonesUser);
 }
