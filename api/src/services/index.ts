@@ -34,6 +34,26 @@ import tags from './tags/tags.service'
 
 import comments from './comments/comments.service'
 
+import countries from './countries/countries.service';
+
+import states from './states/states.service';
+
+import cities from './cities/cities.service';
+
+import streets from './streets/streets.service';
+
+import addressTypes from './address-types/address-types.service';
+
+import addresses from './addresses/addresses.service';
+
+import addressesUser from './addresses-user/addresses-user.service';
+
+import addressBorrower from './address-borrower/address-borrower.service';
+
+import alteredAddressNotification from './altered-address-notification/altered-address-notification.service';
+
+import previousAddress from './previous-address/previous-address.service';
+
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -55,4 +75,14 @@ export default function (app: Application): void {
   app.configure(contractsLoan)
   app.configure(tags)
   app.configure(comments)
+  app.configure(countries);
+  app.configure(states);
+  app.configure(cities);
+  app.configure(streets);
+  app.configure(addressTypes);
+  app.configure(addresses);
+  app.configure(addressesUser);
+  app.configure(addressBorrower);
+  app.configure(alteredAddressNotification);
+  app.configure(previousAddress);
 }
