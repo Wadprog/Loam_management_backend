@@ -26,6 +26,14 @@ import authorizationsroles from './authorizationsroles/authorizationsroles.servi
 
 import rolesTenant from './roles-tenant/roles-tenant.service'
 
+import contracts from './contracts/contracts.service'
+
+import contractsLoan from './contracts-loan/contracts-loan.service'
+
+import tags from './tags/tags.service'
+
+import comments from './comments/comments.service'
+
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -43,4 +51,8 @@ export default function (app: Application): void {
   app.configure(roles)
   app.configure(authorizationsroles)
   app.configure(rolesTenant)
+  app.configure(contracts)
+  app.configure(contractsLoan)
+  app.configure(tags)
+  app.configure(comments)
 }
