@@ -1,7 +1,7 @@
 import winston, { createLogger, format, transports } from 'winston'
 
 const logger = createLogger({
-  level: 'error',
+  level: 'info',
   format: format.combine(format.splat(), format.simple()),
   transports: [
     new transports.File({ filename: 'error.log', level: 'error' }),
