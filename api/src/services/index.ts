@@ -60,6 +60,10 @@ import phoneTypes from './phone-types/phone-types.service';
 
 import phonesUser from './phones-user/phones-user.service';
 
+import settings from './settings/settings.service';
+
+import configurations from './configurations/configurations.service';
+
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -94,4 +98,6 @@ export default function (app: Application): void {
   app.configure(phones);
   app.configure(phoneTypes);
   app.configure(phonesUser);
+  app.configure(settings);
+  app.configure(configurations);
 }
