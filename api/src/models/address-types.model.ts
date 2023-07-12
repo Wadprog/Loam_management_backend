@@ -9,13 +9,15 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     id!: number
     name!: string
 
-    // static associate(models: any): void {
-    // Employee.belongsToMany(models.EmployeesTenant, {
-    //   through: 'employees_tenant',
-    //   onDelete: 'CASCADE'
-    // })
-    // AddressType.belongsTo(models.People, {})
-    // }
+    static associate(models: any): void {
+      AddressType.hasMany(models.AddressesUser, {
+        foreignKey: {
+          name: 'address_type_id',
+          allowNull: false
+        },
+        onUpdate: 'CASCADE'
+      })
+    }
   }
 
   AddressType.init(
@@ -34,7 +36,8 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     {
       sequelize,
       modelName: 'AddressTypes',
-      tableName: 'address_types'
+      tableName: 'address_types',
+      underscored: true
     }
   )
 

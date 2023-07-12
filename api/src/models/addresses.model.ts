@@ -1,27 +1,48 @@
+import { underscore } from '@sequelize/core/types/utils/string'
 import { Sequelize, Model } from 'sequelize'
 
 export interface AddressInterface {
   id: number
-  city_id: string
-  state_id: string
-  street_id: string
-  country_id: string
+  city_id: number
+  state_id: number
+  street_id: number
+  country_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class Address extends Model<AddressInterface> implements AddressInterface {
     id!: number
-    city_id!: string
-    state_id!: string
-    street_id!: string
-    country_id!: string
+    city_id!: number
+    state_id!: number
+    street_id!: number
+    country_id!: number
 
-    // static associate(models: any): void {
-    // Employee.belongsToMany(models.EmployeesTenant, {
-    //   through: 'employees_tenant',
-    //   onDelete: 'CASCADE'
-    // })
-    // Address.belongsTo(models.People, {})
-    // }
+    static associate(models: any): void {
+      Address.belongsTo(models.Countries, {
+        foreignKey: {
+          allowNull: false,
+          name: 'country_id'
+        }
+      })
+      Address.belongsTo(models.Cities, {
+        foreignKey: {
+          allowNull: false,
+          name: 'city_id'
+        }
+      })
+      Address.belongsTo(models.States, {
+        foreignKey: {
+          allowNull: false,
+          name: 'state_id'
+        }
+      })
+
+      Address.belongsTo(models.Streets, {
+        foreignKey: {
+          allowNull: false,
+          name: 'street_id'
+        }
+      })
+    }
   }
 
   Address.init(
@@ -69,7 +90,8 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     {
       sequelize,
       modelName: 'Addresses',
-      tableName: 'addresses'
+      tableName: 'addresses',
+      underscored: true
     }
   )
 

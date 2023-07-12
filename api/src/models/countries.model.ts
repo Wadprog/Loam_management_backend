@@ -20,11 +20,12 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     currency_symbol!: string
 
     static associate(models: any): void {
-      // Employee.belongsToMany(models.EmployeesTenant, {
-      //   through: 'employees_tenant',
-      //   onDelete: 'CASCADE'
-      // })
-      Country.belongsTo(models.People, {})
+      Country.hasMany(models.States, {
+        foreignKey: {
+          allowNull: false,
+          name: 'country_id'
+        }
+      })
     }
   }
 
@@ -63,7 +64,8 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     {
       sequelize,
       modelName: 'Countries',
-      tableName: 'countries'
+      tableName: 'countries',
+      underscored: true
     }
   )
 

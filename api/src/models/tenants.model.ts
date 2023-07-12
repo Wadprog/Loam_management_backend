@@ -13,7 +13,7 @@ export default (sequelize: any, DataTypes: any) => {
     active!: boolean
 
     static associate(models: any): void {
-      Tenant.hasMany(models.EmployeesTenant, {
+      Tenant.hasMany(models.Employees, {
         onDelete: 'CASCADE'
       })
 

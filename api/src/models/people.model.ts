@@ -3,25 +3,25 @@
 import { Sequelize, Model } from 'sequelize'
 
 export interface PersonInterface {
-  id: string
+  id: number
   given_name: string
   familly_name: string
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class Person extends Model<PersonInterface> implements PersonInterface {
     // eslint-disable-next-line prettier/prettier
-
-    id!: string
-
+    id!: number
     name!: string
-
     familly_name!: string
-
     given_name!: string
 
     static associate(models: any): void {
-      // Person.belongsTo(models.Customer, {})
-      // Person.belongsTo(models.Person, {})
+      Person.hasMany(models.Address, {
+        onUpdate: 'CASCADE'
+      })
+      Person.hasMany(models.phone, {
+        onUpdate: 'CASCADE'
+      })
     }
   }
 

@@ -19,13 +19,40 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     date_address_from!: Date
     date_address_to!: Date
 
-    // static associate(models: any): void {
-    // Employee.belongsToMany(models.EmployeesTenant, {
-    //   through: 'employees_tenant',
-    //   onDelete: 'CASCADE'
-    // })
-    // AddressUser.belongsTo(models.People, {})
-    // }
+    static associate(models: any): void {
+      AddressBorrower.belongsTo(models.Tenants, {
+        foreignKey: {
+          allowNull: false,
+          name: 'tenant_id'
+        }
+      })
+
+      AddressBorrower.belongsTo(models.Borrowers, {
+        foreignKey: {
+          allowNull: false,
+          name: 'borrower_id'
+        }
+      })
+
+      AddressBorrower.belongsTo(models.Addresses, {
+        foreignKey: {
+          allowNull: false,
+          name: 'address_id'
+        }
+      })
+
+      AddressBorrower.belongsTo(models.AddressTypes, {
+        foreignKey: {
+          allowNull: false,
+          name: 'address_type_id'
+        }
+      })
+      // Employee.belongsToMany(models.EmployeesTenant, {
+      //   through: 'employees_tenant',
+      //   onDelete: 'CASCADE'
+      // })
+      // AddressUser.belongsTo(models.People, {})
+    }
   }
 
   AddressBorrower.init(
@@ -74,14 +101,15 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       },
       date_address_to: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
       }
     },
 
     {
       sequelize,
       modelName: 'AddressesBorrower',
-      tableName: 'addresses_borrower'
+      tableName: 'addresses_borrower',
+      underscored: true
     }
   )
 

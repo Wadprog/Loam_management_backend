@@ -2,35 +2,79 @@ import { Sequelize, Model } from 'sequelize'
 
 export interface AlteredAddressNotificationInterface {
   id: number
-  to_notify_tenant_id: number
-  status: string
+  tenant_id: number
+  employee_id: number
+  borrower_id: number
+  old_address_id: number
+  new_address_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
-  class AlteredAddressNotifications
+  class PreviousAddress
     extends Model<AlteredAddressNotificationInterface>
     implements AlteredAddressNotificationInterface
   {
     id!: number
-    to_notify_tenant_id!: number
-    status!: string
+    tenant_id!: number
+    employee_id!: number
+    borrower_id!: number
+    old_address_id!: number
+    new_address_id!: number
 
-    // static associate(models: any): void {
-    // Employee.belongsToMany(models.EmployeesTenant, {
-    //   through: 'employees_tenant',
-    //   onDelete: 'CASCADE'
-    // })
-    // AddressUser.belongsTo(models.People, {})
-    // }
+    static associate(models: any): void {
+      PreviousAddress.belongsTo(models.Tenants, {
+        foreignKey: {
+          allowNull: false,
+          name: 'tenant_id'
+        }
+      })
+      PreviousAddress.belongsTo(models.Borrowers, {
+        foreignKey: {
+          allowNull: false,
+          name: 'borrower_id'
+        }
+      })
+      PreviousAddress.belongsTo(models.Employees, {
+        foreignKey: {
+          allowNull: false,
+          name: 'employee_id'
+        }
+      })
+    }
   }
 
-  AlteredAddressNotifications.init(
+  PreviousAddress.init(
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
       },
-      to_notify_tenant_id: {
+      tenant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'tenants',
+          key: 'id'
+        }
+      },
+
+      borrower_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'borrowers',
+          key: 'id'
+        }
+      },
+      employee_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'employees',
+          key: 'id'
+        }
+      },
+      old_address_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -38,11 +82,12 @@ export default (sequelize: Sequelize, DataTypes: any) => {
           key: 'id'
         }
       },
-      status: {
-        type: DataTypes.STRING,
+      new_address_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          isIn: [['sent', 'read', 'updated', 'ignored']]
+        references: {
+          model: 'addresses',
+          key: 'id'
         }
       }
     },
@@ -54,5 +99,5 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     }
   )
 
-  return AlteredAddressNotifications
+  return PreviousAddress
 }

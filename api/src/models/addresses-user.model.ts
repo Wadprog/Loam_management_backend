@@ -17,13 +17,26 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     date_address_from!: Date
     date_address_to!: Date
 
-    // static associate(models: any): void {
-    // Employee.belongsToMany(models.EmployeesTenant, {
-    //   through: 'employees_tenant',
-    //   onDelete: 'CASCADE'
-    // })
-    // AddressUser.belongsTo(models.People, {})
-    // }
+    static associate(models: any): void {
+      AddressesUser.belongsTo(models.People, {
+        foreignKey: {
+          name: 'person_id',
+          allowNull: false
+        }
+      })
+      AddressesUser.belongsTo(models.Addresses, {
+        foreignKey: {
+          name: 'address_id',
+          allowNull: false
+        }
+      })
+      AddressesUser.belongsTo(models.AddressTypes, {
+        foreignKey: {
+          name: 'address_type_id',
+          allowNull: false
+        }
+      })
+    }
   }
 
   AddressesUser.init(
@@ -64,14 +77,15 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       },
       date_address_to: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
       }
     },
 
     {
       sequelize,
       modelName: 'AddressesUser',
-      tableName: 'addresses_user'
+      tableName: 'addresses_user',
+      underscored: true
     }
   )
 
