@@ -15,10 +15,26 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     user_id!: number
     phone_type_id!: number
 
-    // static associate(models: any): void {
-    // Person.belongsTo(models.Customer, {})
-    // Person.belongsTo(models.Person, {})
-    // }
+    static associate(models: any): void {
+      PhoneUser.belongsTo(models.People, {
+        foreignKey: {
+          allowNull: false,
+          name: 'user_id'
+        }
+      })
+      PhoneUser.belongsTo(models.Phones, {
+        foreignKey: {
+          allowNull: false,
+          name: 'phone_id'
+        }
+      })
+      PhoneUser.belongsTo(models.PhoneTypes, {
+        foreignKey: {
+          allowNull: false,
+          name: 'phone_type_id'
+        }
+      })
+    }
   }
 
   PhoneUser.init(
@@ -33,7 +49,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'people',
           key: 'id'
         }
       },
@@ -59,7 +75,8 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     {
       sequelize,
       modelName: 'PhonesUser',
-      tableName: 'phones_user'
+      tableName: 'phones_user',
+      underscored: true
     }
   )
 

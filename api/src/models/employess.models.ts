@@ -1,33 +1,39 @@
 import { Sequelize, Model } from 'sequelize'
 
 export interface EmployeesTenantInterface {
+  id: number
   salary: number
   active: boolean
   role_id: number
   username: string
   password: string
   tenant_id: number
-  employee_id: number
+  person_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class EmployeesTenant extends Model<EmployeesTenantInterface> implements EmployeesTenantInterface {
+    id!: number
     tenant_id!: number
     role_id!: number
-    employee_id!: number
     salary!: number
+    person_id!: number
     username!: string
     password!: string
     active!: boolean
 
     static associate(models: any): void {
       EmployeesTenant.belongsTo(models.Tenants)
-      EmployeesTenant.belongsTo(models.Employees)
       EmployeesTenant.belongsTo(models.RolesTenant)
     }
   }
 
   EmployeesTenant.init(
     {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       active: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
@@ -63,12 +69,12 @@ export default (sequelize: Sequelize, DataTypes: any) => {
           key: 'id'
         }
       },
-      employee_id: {
+      person_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         references: {
-          model: 'employees',
+          model: 'people',
           key: 'id'
         }
       }
@@ -76,8 +82,8 @@ export default (sequelize: Sequelize, DataTypes: any) => {
 
     {
       sequelize,
-      modelName: 'EmployeesTenant',
-      tableName: 'employees_tenant',
+      modelName: 'Employees',
+      tableName: 'employees',
       underscored: true
     }
   )

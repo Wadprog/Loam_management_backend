@@ -11,13 +11,20 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     name!: string
     state_id!: string
 
-    // static associate(models: any): void {
-    // Employee.belongsToMany(models.EmployeesTenant, {
-    //   through: 'employees_tenant',
-    //   onDelete: 'CASCADE'
-    // })
-    // City.belongsTo(models.People, {})
-    // }
+    static associate(models: any): void {
+      City.belongsTo(models.States, {
+        foreignKey: {
+          allowNull: false,
+          name: 'state_id'
+        }
+      })
+      City.hasMany(models.Streets, {
+        foreignKey: {
+          allowNull: false,
+          name: 'city_id'
+        }
+      })
+    }
   }
 
   City.init(
@@ -27,10 +34,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-      },
+
       state_id: {
         type: DataTypes.MEDIUMINT.UNSIGNED,
         allowNull: false,
@@ -38,13 +42,18 @@ export default (sequelize: Sequelize, DataTypes: any) => {
           model: 'states',
           key: 'id'
         }
+      },
+      name: {
+        type: DataTypes.STRING(100),
+        allowNull: false
       }
     },
 
     {
       sequelize,
       modelName: 'Cities',
-      tableName: 'cities'
+      tableName: 'cities',
+      underscored: true
     }
   )
 

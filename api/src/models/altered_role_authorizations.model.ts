@@ -67,7 +67,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       },
 
       action: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.ENUM('added', 'removed'),
         allowNull: false,
         validate: {
           isIn: [['added', 'removed']]
@@ -78,7 +78,8 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     {
       sequelize,
       modelName: 'AlteredRolesAuthorizations',
-      tableName: 'altered_roles_authorizations'
+      tableName: 'altered_roles_authorizations',
+      underscored: true
     }
   )
 
