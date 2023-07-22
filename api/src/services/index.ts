@@ -1,33 +1,19 @@
 import { Application } from '../declarations'
 import employees from './employees/employees.service'
 import customers from './customers/customers.service'
-
 import borrowers from './borrowers/borrowers.service'
-
 import loans from './loans/loans.service'
-
 import instalments from './instalments/instalments.service'
-
 import borrowersOrganization from './borrowers_organization/borrowers_organization.service'
-
 import loanRequests from './loan_requests/loan_requests.service'
-
 import loanReviews from './loan_reviews/loan_reviews.service'
-
 import colateral from './colateral/colateral.service'
-
 import medias from './medias/medias.service'
-
 import permitions from './authorizations/authorizations.service'
-
 import roles from './roles/roles.service'
-
 import authorizationsroles from './authorizationsroles/authorizationsroles.service'
-
 import rolesTenant from './roles-tenant/roles-tenant.service'
-
 import contracts from './contracts/contracts.service'
-
 import contractsLoan from './contracts-loan/contracts-loan.service'
 
 import tags from './tags/tags.service'
@@ -61,6 +47,8 @@ import phonesUser from './phones-user/phones-user.service'
 import settings from './settings/settings.service'
 
 import configurations from './configurations/configurations.service'
+
+import tenants from './tenants/tenants.service'
 
 // Don't remove this comment. It's needed to format import lines nicely.
 
@@ -97,4 +85,5 @@ export default function (app: Application): void {
   app.configure(phonesUser)
   app.configure(settings)
   app.configure(configurations)
+  app.configure(tenants)
 }
