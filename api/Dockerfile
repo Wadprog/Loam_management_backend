@@ -8,4 +8,7 @@ RUN npm install
 RUN apk update && apk add bash
 RUN apk add --no-cache bash
 COPY . .
+RUN ["chmod", "+x", "/usr/local/bin/docker-entrypoint.sh"]
+#"/usr/src/app/docker-entrypoint.sh
+#/usr/local/bin/docker-entrypoint.sh:
 CMD ["npm","run","dev"]

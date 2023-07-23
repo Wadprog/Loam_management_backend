@@ -25,6 +25,8 @@
   },
   "scripts": {
     "dev": "nodemon",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all",
     "test:api": "echo \"Error: no test specified\" && exit 1",
     "lint:api": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
     "start": "npm run compile && node lib/",
@@ -71,6 +73,7 @@
     "nodemon": "^2.0.22",
     "pg": "^8.7.1",
     "sequelize": "^6.32.1",
+    "sequelize-cli": "^6.6.1",
     "serve-favicon": "^2.5.0",
     "winston": "^3.4.0"
   }
