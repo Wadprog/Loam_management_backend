@@ -12,7 +12,7 @@ services:
       - '3030:3030'
     volumes:
       - ./api:/app
-    # command: ./docker-entrypoint.sh
+    command: ./docker-entrypoint.sh
     depends_on:
       - prestamo_db
   prestamo_db:
