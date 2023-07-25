@@ -1,42 +1,55 @@
-import * as feathersAuthentication from '@feathersjs/authentication';
-import * as local from '@feathersjs/authentication-local';
+import commonHooks from 'feathers-hooks-common'
+import * as feathersAuthentication from '@feathersjs/authentication'
+import * as local from '@feathersjs/authentication-local'
 // Don't remove this comment. It's needed to format import lines nicely.
 
-const { authenticate } = feathersAuthentication.hooks;
-const { hashPassword, protect } = local.hooks;
+const { authenticate } = feathersAuthentication.hooks
+const { hashPassword, protect } = local.hooks
 
+const protectkeys = protect(
+  ...[
+    'password',
+    'verifyToken',
+    'resetToken',
+    'resetShortToken',
+    'resetExpires',
+    'verifyShortToken',
+    'activationKey',
+    'resetPasswordKey',
+    'verifyExpires',
+    'search_vector'
+  ]
+)
+
+const preventChanges = [
+  'email',
+  'isVerified',
+  'verifyToken',
+  'verifyShortToken',
+  'verifyExpires',
+  'verifyChanges',
+  'resetToken',
+  'resetShortToken',
+  'resetExpires',
+  'activationKey',
+  'resetPasswordKey',
+  'password'
+]
 export default {
   before: {
-    all: [],
-    find: [ authenticate('jwt') ],
-    get: [ authenticate('jwt') ],
-    create: [ hashPassword('password') ],
-    update: [ hashPassword('password'),  authenticate('jwt') ],
-    patch: [ hashPassword('password'),  authenticate('jwt') ],
-    remove: [ authenticate('jwt') ]
+    all: [authenticate('jwt')],
+    find: [],
+    get: [],
+    create: [hashPassword('password')],
+    update: commonHooks.disallow(),
+    patch: [
+      hashPassword('password'),
+      commonHooks.iff(commonHooks.isProvider('external'), commonHooks.preventChanges(true, ...preventChanges))
+    ],
+    remove: commonHooks.disallow()
   },
 
   after: {
-    all: [ 
-      // Make sure the password field is never sent to the client
-      // Always must be the last hook
-      protect('password')
-    ],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
-  },
-
-  error: {
-    all: [],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    all: [protectkeys]
   }
-};
+}

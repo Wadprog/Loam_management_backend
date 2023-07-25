@@ -4,6 +4,8 @@ export interface TenantInterface {
   id: number
   name: string
   active: boolean
+  // plan_id: number
+  // plan_period: string
 }
 
 export default (sequelize: any, DataTypes: any) => {
@@ -11,6 +13,8 @@ export default (sequelize: any, DataTypes: any) => {
     id!: number
     name!: string
     active!: boolean
+    // plan_id!: number
+    // plan_period!: string
 
     static associate(models: any): void {
       Tenant.hasMany(models.Employees, {
@@ -40,10 +44,27 @@ export default (sequelize: any, DataTypes: any) => {
         defaultValue: true,
         type: DataTypes.BOOLEAN
       }
+      // plan_id: {
+      //   allowNull: false,
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     model: 'plans',
+      //     key: 'id'
+      //   }
+      // },
+      // plan_period: {
+      //   allowNull: false,
+      //   type: DataTypes.STRING(20),
+      //   validate: {
+      //     isIn: [['monthly', 'yearly']]
+      //   },
+      //   defaultValue: 'monthly'
+      // }
     },
 
     {
       sequelize,
+      underscored: true,
       modelName: 'Tenants',
       tableName: 'tenants'
     }

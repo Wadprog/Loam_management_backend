@@ -16,12 +16,6 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     description!: string
 
     static associate(models: any): void {
-      RolesTenant.belongsTo(models.AuthorizationsRole, {
-        foreignKey: {
-          allowNull: false
-        },
-        constraints: true
-      })
       RolesTenant.belongsTo(models.Tenants, {
         foreignKey: {
           allowNull: false
@@ -36,7 +30,8 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
       },
 
       tenant_id: {

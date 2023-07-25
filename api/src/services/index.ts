@@ -50,6 +50,28 @@ import configurations from './configurations/configurations.service'
 
 import tenants from './tenants/tenants.service'
 
+import plan from './plans/plans.service';
+
+import subscriptions from './subscriptions/subscriptions.service';
+
+import discounts from './discounts/discounts.service';
+
+import discountPeriod from './discount-period/discount-period.service';
+
+import features from './features/features.service';
+
+import featuresPlan from './features-plan/features-plan.service';
+
+import payments from './payments/payments.service';
+
+import paymentMethods from './payment_methods/payment_methods.service';
+
+import fraudLogs from './fraud_logs/fraud_logs.service';
+
+import settingsTenant from './settings_tenant/settings_tenant.service';
+
+import settingsHistory from './settings_history/settings_history.service';
+
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application): void {
@@ -86,4 +108,15 @@ export default function (app: Application): void {
   app.configure(settings)
   app.configure(configurations)
   app.configure(tenants)
+  app.configure(plan);
+  app.configure(subscriptions);
+  app.configure(discounts);
+  app.configure(discountPeriod);
+  app.configure(features);
+  app.configure(featuresPlan);
+  app.configure(payments);
+  app.configure(paymentMethods);
+  app.configure(fraudLogs);
+  app.configure(settingsTenant);
+  app.configure(settingsHistory);
 }

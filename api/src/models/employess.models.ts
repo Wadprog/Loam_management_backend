@@ -9,6 +9,7 @@ export interface EmployeesTenantInterface {
   password: string
   tenant_id: number
   person_id: number
+  is_primary: boolean
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class EmployeesTenant extends Model<EmployeesTenantInterface> implements EmployeesTenantInterface {
@@ -20,19 +21,33 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     username!: string
     password!: string
     active!: boolean
+    is_primary!: boolean
 
     static associate(models: any): void {
-      EmployeesTenant.belongsTo(models.Tenants)
-      EmployeesTenant.belongsTo(models.RolesTenant)
+      EmployeesTenant.belongsTo(models.Tenants, {
+        foreignKey: {
+          allowNull: false,
+          name: 'tenant_id'
+        },
+        constraints: true
+      })
+      EmployeesTenant.belongsTo(models.RolesTenant, {
+        foreignKey: {
+          allowNull: false,
+          name: 'role_id'
+        },
+        constraints: true
+      })
     }
   }
 
   EmployeesTenant.init(
     {
       id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        autoIncrement: true
       },
       active: {
         allowNull: false,
@@ -54,7 +69,6 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       role_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
         references: {
           model: 'roles_tenant',
           key: 'id'
@@ -77,6 +91,11 @@ export default (sequelize: Sequelize, DataTypes: any) => {
           model: 'people',
           key: 'id'
         }
+      },
+      is_primary: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       }
     },
 
