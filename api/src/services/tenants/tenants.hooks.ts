@@ -1,25 +1,30 @@
-import { HooksObject } from '@feathersjs/feathers';
-import * as authentication from '@feathersjs/authentication';
-// Don't remove this comment. It's needed to format import lines nicely.
+import commonHooks from 'feathers-hooks-common'
+import * as local from '@feathersjs/authentication-local'
+import * as authentication from '@feathersjs/authentication'
 
-const { authenticate } = authentication.hooks;
+import AutoLoginHook from '../../Hooks/AutoLogin.hook'
+
+const { hashPassword, protect } = local.hooks
+const { authenticate } = authentication.hooks
+
+const protectkeys = protect(...['search_vector'])
 
 export default {
   before: {
-    all: [ authenticate('jwt') ],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
+    all: [],
+    find: [authenticate('jwt')],
+    get: [authenticate('jwt')],
+    create: hashPassword('employee.password'),
+    update: [commonHooks.disallow('external')],
+    patch: [authenticate('jwt'), hashPassword('employee.password')],
     remove: []
   },
 
   after: {
     all: [],
-    find: [],
-    get: [],
-    create: [],
+    find: [protectkeys],
+    get: [protectkeys],
+    create: [AutoLoginHook],
     update: [],
     patch: [],
     remove: []
@@ -34,4 +39,4 @@ export default {
     patch: [],
     remove: []
   }
-};
+}

@@ -6,23 +6,24 @@ export interface PersonInterface {
   id: number
   given_name: string
   familly_name: string
+  tenant_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class Person extends Model<PersonInterface> implements PersonInterface {
     // eslint-disable-next-line prettier/prettier
     id!: number
-    name!: string
-    familly_name!: string
+    tenant_id!: number
     given_name!: string
+    familly_name!: string
 
-    static associate(models: any): void {
-      Person.hasMany(models.Address, {
-        onUpdate: 'CASCADE'
-      })
-      Person.hasMany(models.phone, {
-        onUpdate: 'CASCADE'
-      })
-    }
+    // static associate(models: any): void {
+    //   Person.hasMany(models.Addresses, {
+    //     onUpdate: 'CASCADE'
+    //   })
+    //   Person.hasMany(models.Phones, {
+    //     onUpdate: 'CASCADE'
+    //   })
+    // }
   }
 
   Person.init(
@@ -41,11 +42,21 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       familly_name: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+
+      tenant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'tenants',
+          key: 'id'
+        }
       }
     },
 
     {
       sequelize,
+      underscored: true,
       modelName: 'People',
       tableName: 'people'
     }

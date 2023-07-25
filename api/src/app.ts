@@ -17,7 +17,7 @@ import services from './services'
 import appHooks from './app.hooks'
 // import channels from './channels'
 
-// import authentication from './authentication'
+import authentication from './authentication'
 import sequelize from './sequelize'
 // Don't remove this comment. It's needed to format import lines nicely.
 
@@ -45,8 +45,8 @@ app.configure(express.rest())
 
 app.configure(sequelize)
 
-app.configure(middleware)
-// app.configure(authentication)
+// app.configure(middleware)
+app.configure(authentication)
 app.configure(database)
 app.get('startSequelize')()
 app.configure(services)

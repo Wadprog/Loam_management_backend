@@ -77,8 +77,9 @@ export default (sequelize: Sequelize, DataTypes: any) => {
 
     {
       sequelize,
-      modelName: 'People',
-      tableName: 'people'
+      underscored: true,
+      modelName: 'PreviousRoles',
+      tableName: 'previous_roles'
     }
   )
 

@@ -31,7 +31,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         allowNull: false,
         primaryKey: true,
         references: {
-          model: 'tenats',
+          model: 'tenants',
           key: 'id'
         }
       },
