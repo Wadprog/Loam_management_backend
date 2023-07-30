@@ -1,6 +1,3 @@
-
-
-
 CREATE PROCEDURE proc_create_employee(p_employe_data JSON , p_tenant_id INT , p_is_primary BOOLEAN)  
 BEGIN
     DECLARE person_id INT DEFAULT NULL;
@@ -14,7 +11,7 @@ BEGIN
         SET @salary = JSON_EXTRACT(p_employe_data, '$.salary');
         
         IF p_is_primary THEN 
-			SELECT id from roles where title='admin' INTO @role_id;
+			SELECT id from roles_tenant WHERE tenant_id = p_tenant_id and name = 'admin' into @role_id;
 			ELSE
 				set p_is_primary = false;
         END IF;
@@ -24,5 +21,5 @@ BEGIN
         INSERT INTO employees ( tenant_id, person_id,  role_id, username, password, is_primary, salary,created_at, updated_at) 
         VALUES (p_tenant_id, person_id, @role_id, @username, @password, p_is_primary, @salary, current_timestamp, current_timestamp);
      COMMIT;
- END;
+ END$$
  

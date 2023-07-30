@@ -37,7 +37,14 @@ export default (sequelize: Sequelize, DataTypes: any) => {
           name: 'role_id'
         },
         constraints: true
-      })
+      }),
+        EmployeesTenant.belongsTo(models.People, {
+          foreignKey: {
+            allowNull: false,
+            name: 'person_id'
+          },
+          constraints: true
+        })
     }
   }
 
