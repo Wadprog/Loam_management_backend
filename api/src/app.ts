@@ -7,6 +7,7 @@ import configuration from '@feathersjs/configuration'
 import express from '@feathersjs/express'
 // import socketio from '@feathersjs/socketio'
 import { HookContext as FeathersHookContext } from '@feathersjs/feathers'
+import morgan from 'morgan'
 
 /** Custom dependencies */
 import database from './models'
@@ -36,6 +37,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 // Host the public folder
 app.use('/', express.static(app.get('public')))
 

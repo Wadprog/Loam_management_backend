@@ -25,6 +25,7 @@
   },
   "scripts": {
     "dev": "nodemon",
+    "local": "nodemon",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
     "test:api": "echo \"Error: no test specified\" && exit 1",
@@ -42,6 +43,7 @@
   "types": "module",
   "devDependencies": {
     "@types/bluebird": "^3.5.38",
+    "@types/config": "^3.3.0",
     "@types/cors": "^2.8.13",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/lodash": "^4.14.195",
@@ -67,6 +69,7 @@
     "@feathersjs/express": "^4.5.14",
     "@feathersjs/socketio": "^4.5.14",
     "@sequelize/core": "^7.0.0-alpha.10",
+    "@types/morgan": "^1.9.4",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -76,12 +79,14 @@
     "feathers-sequelize": "^6.4.0",
     "helmet": "^5.0.1",
     "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
     "mysql2": "^3.5.2",
     "nodemon": "^2.0.22",
     "pg": "^8.7.1",
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1",
     "serve-favicon": "^2.5.0",
+    "stripe": "^11.13.0",
     "winston": "^3.4.0"
   }
 }

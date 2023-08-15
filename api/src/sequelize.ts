@@ -7,6 +7,7 @@ import { Application } from './declarations'
 
 export default function (app: Application): void {
   const dbSettings = app.get('dbSettings')
+  console.log('dbSettings', dbSettings)
   if (!dbSettings) {
     Logger.error('No database settings')
     process.exit(1)
@@ -23,7 +24,7 @@ export default function (app: Application): void {
     const result = oldSetup.apply(this, args)
 
     // Sync to the database
-    app.set('sequelizeSync', () => sequelize.sync({ force: true }))
+    app.set('sequelizeSync', () => sequelize.sync({}))
 
     return result
   }

@@ -1,4 +1,8 @@
-**/node_modules/
+node_modules
+local.*
+**/local.*
+**/node_modules
+
 **/dist
 .git
 npm-debug.log

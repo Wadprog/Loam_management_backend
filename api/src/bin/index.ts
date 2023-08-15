@@ -17,6 +17,7 @@ if (port != null) {
   //     .get('sequelizeSync')()
   //     .then(Logger.info('Database synced'))
   //     .catch((error: Error) => {
+  //       console.log(error)
   //       Logger.error(error.message || error)
   //       process.exit(1)
   //     })

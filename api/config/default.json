@@ -31,5 +31,8 @@
       "passwordField": "password"
     }
   },
-  "postgres": "postgres://postgres:@localhost:5432/api"
+  "postgres": "postgres://postgres:@localhost:5432/api",
+  "stripe":{
+    "secretKey": "sk_test_51NZcKGLtANqeXneylR4odFoVTqG7psfp5pRtODxv6Hlb4cAX8pcfm8zF71prffGAn7GfZCDUd0nTDvcWRMaGiHzr00x3ivkBPR"
+  }
 }
