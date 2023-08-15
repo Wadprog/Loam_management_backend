@@ -3,7 +3,7 @@ import { HookContext } from '@feathersjs/feathers'
 
 // import { Model } from 'sequelize'
 
-export default function (options: any = {}) {
+export default function inc(options: any = {}) {
   // eslint-disable-next-line no-param-reassign
   options.models = options.models || []
 
@@ -20,6 +20,7 @@ export default function (options: any = {}) {
         if (!currentModel) throw new Error(`Service ${model.model} not found`)
 
         newModel.model = currentModel
+        if (newModel.models) newModel.include = inc({ models: newModel.models })(context)
         return newModel
       })
     )

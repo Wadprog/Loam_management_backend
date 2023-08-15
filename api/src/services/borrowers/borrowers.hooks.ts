@@ -1,11 +1,23 @@
-import { HooksObject } from '@feathersjs/feathers';
+import { HookContext } from '@feathersjs/feathers'
+import * as feathersAuthentication from '@feathersjs/authentication'
+
+const { authenticate } = feathersAuthentication.hooks
+
+const attachecCreatorId = (ctx: HookContext) => {
+  // const { data, params } = ctx
+  // const employeeId = params.employee.id
+  // data.creatorId = employeeId
+
+  console.log('called create hook')
+  return ctx
+}
 
 export default {
   before: {
-    all: [],
+    all: authenticate('jwt'),
     find: [],
     get: [],
-    create: [],
+    create: attachecCreatorId,
     update: [],
     patch: [],
     remove: []
@@ -30,4 +42,4 @@ export default {
     patch: [],
     remove: []
   }
-};
+}

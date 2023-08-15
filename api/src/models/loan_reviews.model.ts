@@ -8,6 +8,7 @@ export interface LoanReviewInterface {
   reviewer_id: number
   proposed_amount: number
   loan_request_id: number
+  loan_plan_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class LoanReview extends Model<LoanReviewInterface> implements LoanReviewInterface {
@@ -17,6 +18,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     reviewer_id!: number
     proposed_amount!: number
     loan_request_id!: number
+    loan_plan_id!: number
 
     static associate(models: any): void {
       LoanReview.belongsTo(models.LoanRequests, {
@@ -35,6 +37,14 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
+      },
+      loan_plan_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'loan_plans',
+          key: 'id'
+        }
       },
       proposed_amount: {
         type: DataTypes.DOUBLE,
@@ -61,7 +71,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         allowNull: false,
         defaultValue: 'pending',
         validate: {
-          isIn: [['accepted', 'rejected', 'cancelled']]
+          isIn: [['pending', 'accepted', 'rejected', 'cancelled']]
         }
       }
     },

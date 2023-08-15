@@ -10,13 +10,11 @@ export interface SubscriptionInterface {
   end_date: Date
   price_paid: number
   period: string
-  payment_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class Subscription extends Model<SubscriptionInterface> implements SubscriptionInterface {
     id!: number
     tenant_id!: number
-    payment_id!: number
     plan_id!: number
     discount_id!: number
     status!: string
@@ -54,15 +52,6 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         allowNull: true,
         references: {
           model: 'discounts',
-          key: 'id'
-        }
-      },
-      payment_id: {
-        type: DataTypes.INTEGER,
-
-        allowNull: true,
-        references: {
-          model: 'payments',
           key: 'id'
         }
       },

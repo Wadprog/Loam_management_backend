@@ -8,6 +8,7 @@ export interface BorrowerInterface {
   loan_amounts: number
   active_loans: number
   person_id: number
+  creator_id: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class Borrower extends Model<BorrowerInterface> implements BorrowerInterface {
@@ -18,12 +19,14 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     loan_amounts!: number
     active_loans!: number
     person_id!: number
+    creator_id!: number
 
     static associate(models: any): void {
       Borrower.hasMany(models.Loans, {})
       Borrower.belongsTo(models.People, {
         foreignKey: {
-          allowNull: false
+          allowNull: false,
+          name: 'person_id'
         },
         constraints: true
       }) // is a person
@@ -49,6 +52,15 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         primaryKey: true,
         references: {
           model: 'people',
+          key: 'id'
+        }
+      },
+      creator_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'employees',
           key: 'id'
         }
       },

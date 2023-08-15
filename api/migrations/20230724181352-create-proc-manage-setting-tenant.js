@@ -14,7 +14,7 @@ module.exports = {
     try {
       await queryInterface.sequelize.query(mainQuery, { raw: true })
     } catch (e) {
-      console.log(e)
+      if (e.original.code !== 'ER_SP_ALREADY_EXISTS') console.log(e)
     }
   },
   async down() {

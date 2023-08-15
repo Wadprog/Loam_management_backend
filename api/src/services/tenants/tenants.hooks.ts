@@ -31,7 +31,12 @@ export default {
   },
 
   error: {
-    all: [],
+    all: [
+      (ctx: any) => {
+        console.log('error', ctx.error)
+        return ctx
+      }
+    ],
     find: [],
     get: [],
     create: [],

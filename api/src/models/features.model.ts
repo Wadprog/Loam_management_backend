@@ -35,6 +35,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       status: {
         type: DataTypes.STRING(20),
         allowNull: false,
+        defaultValue: 'supported',
         validate: {
           isIn: [
             ['supported', 'deprecated', 'removed', 'beta', 'alpha', 'in-development', 'testing', 'requested']

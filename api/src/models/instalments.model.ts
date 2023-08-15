@@ -63,9 +63,9 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       status: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: true,
+        defaultValue: 'unpaid',
         validate: {
-          isIn: [['paid', 'unpaid', 'overdue', 'waived']]
+          isIn: [['unpaid', 'paid', 'overdue', 'waived']]
         }
       }
     },

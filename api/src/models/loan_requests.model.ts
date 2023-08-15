@@ -5,7 +5,7 @@ import { Sequelize, Model } from 'sequelize'
 export interface LoanRequestsInterface {
   id: number
   status: string
-  reviewer_id: number
+  creator_id: number
   borrower_id: number
   request_amount: number
   tenant_id: number
@@ -15,16 +15,16 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     // eslint-disable-next-line prettier/prettier
     id!: number
     status!: string
-    reviewer_id!: number
+    creator_id!: number
     borrower_id!: number
     request_amount!: number
     tenant_id!: number
 
-    static associate(models: any): void {
-      LoanRequests.belongsTo(models.Tenants)
-      LoanRequests.belongsTo(models.Borrowers, {})
-      LoanRequests.belongsTo(models.Employees, { as: 'reviewer' })
-    }
+    //   static associate(models: any): void {
+    //     LoanRequests.belongsTo(models.Tenants)
+    //     LoanRequests.belongsTo(models.Borrowers, {})
+    //     LoanRequests.belongsTo(models.Employees, { as: 'creator' })
+    // }
   }
 
   LoanRequests.init(
@@ -34,7 +34,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         allowNull: false,
         type: DataTypes.DOUBLE
       },
-      reviewer_id: {
+      creator_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {

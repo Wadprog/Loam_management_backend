@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import commonHooks from 'feathers-hooks-common'
 import * as feathersAuthentication from '@feathersjs/authentication'
 import * as local from '@feathersjs/authentication-local'
 
-import Assoc from '../../Hooks/AddAssoc.hook'
+import findEmployees from './hooks/findEmployees'
 
 const { authenticate } = feathersAuthentication.hooks
 const { hashPassword, protect } = local.hooks
@@ -38,23 +39,12 @@ const preventChanges = [
   'password'
 ]
 
-const assocEmployee = Assoc({
-  models: [
-    {
-      model: 'Tenants',
-      modelName: 'tenant'
-    },
-    {
-      model: 'People'
-    }
-  ]
-})
 export default {
   before: {
-    all: [authenticate('jwt')],
-    find: [assocEmployee],
-    get: [],
-    create: [hashPassword('password')],
+    all: authenticate('jwt'),
+    find: findEmployees,
+    get: findEmployees,
+    create: hashPassword('password'),
     update: commonHooks.disallow(),
     patch: [
       hashPassword('password'),
