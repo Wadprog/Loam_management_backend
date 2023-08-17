@@ -13,6 +13,7 @@ export interface LoanInterface {
   debt_balance: number
   interest_balance: number
   accepted_loan_review_id: number
+  amount_payment_made: number
 }
 export default (sequelize: Sequelize, DataTypes: any) => {
   class Loan extends Model<LoanInterface> implements LoanInterface {
@@ -29,6 +30,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     loan_request_id!: number
     creator_id!: number
     accepted_loan_review_id!: number
+    amount_payment_made!: number
 
     // static associate(models: any): void {
     //   Loan.belongsToMany(models.Tenants, {
@@ -54,6 +56,11 @@ export default (sequelize: Sequelize, DataTypes: any) => {
       debt_balance: {
         type: DataTypes.DOUBLE,
         allowNull: false
+      },
+      amount_payment_made: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
       },
       interest_balance: {
         type: DataTypes.DOUBLE,

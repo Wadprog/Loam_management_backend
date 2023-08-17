@@ -18,9 +18,7 @@ const host = process.env.DB_HOST_LOCAL_DEV
 
 // const dbSettings = config.get('dbSettings')
 const settings = { username, password, database, dialect, host }
-//  { ...dbSettings, username: 'root' }
-
-console.log({ settings })
+// const settings = { ...dbSettings, username: 'root' }
 
 module.exports = {
   [env]: {

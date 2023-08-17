@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`SequelizeMeta` (
   `name` VARCHAR(255) COLLATE 'utf8mb3_unicode_ci' NOT NULL,
   PRIMARY KEY (`name`),
   UNIQUE INDEX `name` (`name` ASC) VISIBLE)
-ENGINE = InnoDB;
+; -- ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`address_types`
@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`countries` (
   `curency_name` VARCHAR(255) NOT NULL,
   `translations` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -41,12 +41,15 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`states` (
   `country_id` MEDIUMINT UNSIGNED NOT NULL,
   `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `country_id` (`country_id` ASC) VISIBLE,
+  INDEX `country_id` (`country_id`),
   CONSTRAINT `states_country_id_fk`
     FOREIGN KEY (`country_id`)
     REFERENCES `prestamo_db`.`countries` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
+    ; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`cities`
 -- -----------------------------------------------------
@@ -55,11 +58,14 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`cities` (
   `state_id` MEDIUMINT UNSIGNED NOT NULL,
   `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `state_id` (`state_id` ASC) VISIBLE,
+  INDEX `state_id` (`state_id`),
   CONSTRAINT `cities_sate_id_fk`
     FOREIGN KEY (`state_id`)
     REFERENCES `prestamo_db`.`states` (`id`)
     ON UPDATE CASCADE)
+    ; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`streets`
 -- -----------------------------------------------------
@@ -68,13 +74,15 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`streets` (
   `name` VARCHAR(100) NOT NULL,
   `city_id` MEDIUMINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `city_id` (`city_id` ASC) VISIBLE,
+  INDEX `city_id` (`city_id`),
   CONSTRAINT `streets_city_id_fk`
     FOREIGN KEY (`city_id`)
     REFERENCES `prestamo_db`.`cities` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`addresses`
 -- -----------------------------------------------------
@@ -85,10 +93,10 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`addresses` (
   `city_id` MEDIUMINT UNSIGNED NOT NULL,
   `street_id` MEDIUMINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `country_id` (`country_id` ASC) VISIBLE,
-  INDEX `state_id` (`state_id` ASC) VISIBLE,
-  INDEX `city_id` (`city_id` ASC) VISIBLE,
-  INDEX `street_id` (`street_id` ASC) VISIBLE,
+  INDEX `country_id` (`country_id`),
+  INDEX `state_id` (`state_id`),
+  INDEX `city_id` (`city_id`),
+  INDEX `street_id` (`street_id`),
   CONSTRAINT `addresses_ibfk_1`
     FOREIGN KEY (`country_id`)
     REFERENCES `prestamo_db`.`countries` (`id`)
@@ -105,9 +113,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`addresses` (
     FOREIGN KEY (`street_id`)
     REFERENCES `prestamo_db`.`streets` (`id`)
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -120,6 +128,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`tenants` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
+  ; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`roles`
@@ -131,7 +142,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`roles` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -146,8 +159,8 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`roles_tenant` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`, `role_id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `role_id` (`role_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `role_id` (`role_id`),
   CONSTRAINT `roles_tenant_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`)
@@ -155,7 +168,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`roles_tenant` (
   CONSTRAINT `roles_tenant_ibfk_2`
     FOREIGN KEY (`role_id`)
     REFERENCES `prestamo_db`.`roles` (`id`))
-
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`people`
@@ -168,13 +183,13 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`people` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
   CONSTRAINT `people_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -193,9 +208,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`employees` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`, `person_id`),
-  INDEX `role_id` (`role_id` ASC) VISIBLE,
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `person_id` (`person_id` ASC) VISIBLE,
+  INDEX `role_id` (`role_id`),
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `person_id` (`person_id`),
   CONSTRAINT `employees_ibfk_1`
     FOREIGN KEY (`role_id`)
     REFERENCES `prestamo_db`.`roles_tenant` (`id`),
@@ -208,7 +223,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`employees` (
     FOREIGN KEY (`person_id`)
     REFERENCES `prestamo_db`.`people` (`id`)
     ON UPDATE CASCADE)
-
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`borrowers`
 -- -----------------------------------------------------
@@ -222,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`borrowers` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`, `person_id`),
-  INDEX `person_id` (`person_id` ASC) VISIBLE,
+  INDEX `person_id` (`person_id`),
   CONSTRAINT `borrowers_person_id_fk`
     FOREIGN KEY (`person_id`)
     REFERENCES `prestamo_db`.`people` (`id`)
@@ -234,7 +251,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`borrowers` (
     ON UPDATE CASCADE
     )
 
-
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`addresses_borrower`
@@ -250,10 +269,10 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`addresses_borrower` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `address_id` (`address_id` ASC) VISIBLE,
-  INDEX `borrower_id` (`borrower_id` ASC) VISIBLE,
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `address_type_id` (`address_type_id` ASC) VISIBLE,
+  INDEX `address_id` (`address_id`),
+  INDEX `borrower_id` (`borrower_id`),
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `address_type_id` (`address_type_id`),
   CONSTRAINT `addresses_borrower_ibfk_1`
     FOREIGN KEY (`address_id`)
     REFERENCES `prestamo_db`.`addresses` (`id`)
@@ -269,9 +288,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`addresses_borrower` (
     FOREIGN KEY (`address_type_id`)
     REFERENCES `prestamo_db`.`address_types` (`id`)
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -287,9 +306,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`addresses_user` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `address_id` (`address_id` ASC) VISIBLE,
-  INDEX `person_id` (`person_id` ASC) VISIBLE,
-  INDEX `address_type_id` (`address_type_id` ASC) VISIBLE,
+  INDEX `address_id` (`address_id`),
+  INDEX `person_id` (`person_id`),
+  INDEX `address_type_id` (`address_type_id`),
   CONSTRAINT `addresses_user_ibfk_1`
     FOREIGN KEY (`address_id`)
     REFERENCES `prestamo_db`.`addresses` (`id`)
@@ -303,9 +322,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`addresses_user` (
     REFERENCES `prestamo_db`.`address_types` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 
@@ -319,9 +338,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`authorizations` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -337,10 +356,10 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`altered_roles_authorizations` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `role_id` (`role_id` ASC) VISIBLE,
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `modifier_id` (`modifier_id` ASC) VISIBLE,
-  INDEX `authorization_id` (`authorization_id` ASC) VISIBLE,
+  INDEX `role_id` (`role_id`),
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `modifier_id` (`modifier_id`),
+  INDEX `authorization_id` (`authorization_id`),
   CONSTRAINT `altered_roles_authorizations_ibfk_1`
     FOREIGN KEY (`role_id`)
     REFERENCES `prestamo_db`.`roles` (`id`),
@@ -353,9 +372,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`altered_roles_authorizations` (
   CONSTRAINT `altered_roles_authorizations_ibfk_4`
     FOREIGN KEY (`authorization_id`)
     REFERENCES `prestamo_db`.`authorizations` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -365,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`authorizations_role` (
   `role_id` INT NOT NULL,
   `authorization_id` INT NOT NULL,
   PRIMARY KEY (`role_id`, `authorization_id`),
-  INDEX `authorization_id` (`authorization_id` ASC) VISIBLE,
+  INDEX `authorization_id` (`authorization_id`),
   CONSTRAINT `authorizations_role_ibfk_1`
     FOREIGN KEY (`role_id`)
     REFERENCES `prestamo_db`.`roles` (`id`)
@@ -374,9 +393,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`authorizations_role` (
     FOREIGN KEY (`authorization_id`)
     REFERENCES `prestamo_db`.`authorizations` (`id`)
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -390,14 +409,14 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`borrower_tenant` (
   `amount_active_loans` INT UNSIGNED NOT NULL DEFAULT '0',
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
   CONSTRAINT `borrower_tenant_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`)
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -412,9 +431,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`colaterals` (
   `updatedAt` DATETIME NOT NULL,
   `BorrowerId` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`loan_plans`
@@ -428,10 +447,8 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`loan_plans` (
   `payment_frequency` ENUM('daily', 'weekly', 'monthly' ,'yearly') NOT NULL,
   `loan_term` INT NOT NULL,
   `interest_percentage` DOUBLE(2,2) NOT NULL,
-  
-
   PRIMARY KEY (`id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
   CONSTRAINT `loan_plans_tenants_id_fk`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`)
@@ -442,96 +459,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`loan_plans` (
     REFERENCES `prestamo_db`.`employees` (`id`)
     ON UPDATE CASCADE
 )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `prestamo_db`.`loan_reviews`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prestamo_db`.`loan_reviews` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `proposed_amount` DOUBLE NOT NULL,
-  `reviewer_id` INT NULL DEFAULT NULL,
-  `loan_request_id` INT NOT NULL,
-  `status` VARCHAR(255) NOT NULL DEFAULT 'pending',
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
-  `loan_plan_id` INT NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `loan_request_id` (`loan_request_id` ASC) VISIBLE,
-  CONSTRAINT `loan_reviews_ibfk_1`
-    FOREIGN KEY (`loan_request_id`)
-    REFERENCES `prestamo_db`.`loan_requests` (`id`),
-
-  CONSTRAINT `loan_reviews_ibfk_2`
-    FOREIGN KEY (`reviewer_id`)
-    REFERENCES `prestamo_db`.`employees` (`id`),
-  CONSTRAINT `loan_reviews_ibfk_3`
-    FOREIGN KEY (`loan_plan_id`)
-    REFERENCES `prestamo_db`.`loan_plans` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
--- -----------------------------------------------------
--- Table `prestamo_db`.`loans`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prestamo_db`.`loans` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `score` INT NOT NULL DEFAULT '0',
-  `debt_balance` DOUBLE NOT NULL,
-  `interest_balance` DOUBLE NOT NULL,
-  `next_payment` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `issue_date` DATETIME NOT NULL,
-  `maturity_date` DATETIME NOT NULL,
-  `loan_status` Enum('active', 'paid', 'canceled') NOT NULL DEFAULT 'active',
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
-  `creator_id` INT NOT NULL,
-  `accepted_loan_review_id` INT NULL DEFAULT NULL,
-
-  CONSTRAINT `loans_tenants_reviews_id_fk`
-    FOREIGN KEY (`accepted_loan_review_id`)
-    REFERENCES `prestamo_db`.`loan_reviews` (`id`)
-    ON UPDATE CASCADE,
-
-  CONSTRAINT `loans_creator_id_fk`
-    FOREIGN KEY (`creator_id`)
-    REFERENCES `prestamo_db`.`employees` (`id`)
-    ON UPDATE CASCADE,
-
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `prestamo_db`.`colaterals_loan`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prestamo_db`.`colaterals_loan` (
-  `createdAt` DATETIME NOT NULL,
-  `updatedAt` DATETIME NOT NULL,
-  `colateral_id` INT NOT NULL,
-  `LoanId` INT NOT NULL,
-  PRIMARY KEY (`colateral_id`, `LoanId`),
-  INDEX `LoanId` (`LoanId` ASC) VISIBLE,
-  CONSTRAINT `colaterals_loan_ibfk_1`
-    FOREIGN KEY (`colateral_id`)
-    REFERENCES `prestamo_db`.`colaterals` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `colaterals_loan_ibfk_2`
-    FOREIGN KEY (`LoanId`)
-    REFERENCES `prestamo_db`.`loans` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `prestamo_db`.`loan_requests`
@@ -546,15 +476,96 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`loan_requests` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
   CONSTRAINT `loan_requests_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE, BIGINT
+    ON UPDATE CASCADE, 
   CONSTRAINT `loan_requests_creator_id_fk`
     FOREIGN KEY (`creator_id`)
     REFERENCES `prestamo_db`.`employees` (`id`))
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
+-- -----------------------------------------------------
+-- Table `prestamo_db`.`loan_reviews`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `prestamo_db`.`loan_reviews` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `proposed_amount` DOUBLE NOT NULL,
+  `reviewer_id` INT NULL DEFAULT NULL,
+  `loan_request_id` INT NOT NULL,
+  `status` VARCHAR(255) NOT NULL DEFAULT 'pending',
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  `loan_plan_id` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `loan_request_id` (`loan_request_id`),
+  CONSTRAINT `loan_reviews_ibfk_1`
+    FOREIGN KEY (`loan_request_id`)
+    REFERENCES `prestamo_db`.`loan_requests` (`id`),
+  CONSTRAINT `loan_reviews_ibfk_2`
+    FOREIGN KEY (`reviewer_id`)
+    REFERENCES `prestamo_db`.`employees` (`id`),
+  CONSTRAINT `loan_reviews_ibfk_3`
+    FOREIGN KEY (`loan_plan_id`)
+    REFERENCES `prestamo_db`.`loan_plans` (`id`))
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
+
+-- -----------------------------------------------------
+-- Table `prestamo_db`.`loans`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `prestamo_db`.`loans` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `score` INT NOT NULL DEFAULT 0,
+  `debt_balance` DOUBLE NOT NULL,
+  `interest_balance` DOUBLE NOT NULL,
+  `next_payment` DATETIME NOT NULL,
+  `issue_date` DATETIME NOT NULL,
+  `maturity_date` DATETIME NOT NULL,
+  `loan_status` Enum('active', 'paid', 'canceled') NOT NULL DEFAULT 'active',
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  `creator_id` INT NOT NULL,
+  `amount_payment_made` INT NOT NULL DEFAULT 0,
+  `accepted_loan_review_id` INT NULL DEFAULT NULL,
+  CONSTRAINT `loans_tenants_reviews_id_fk`
+    FOREIGN KEY (`accepted_loan_review_id`)
+    REFERENCES `prestamo_db`.`loan_reviews` (`id`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `loans_creator_id_fk`
+    FOREIGN KEY (`creator_id`)
+    REFERENCES `prestamo_db`.`employees` (`id`)
+    ON UPDATE CASCADE,
+  PRIMARY KEY (`id`));
+ -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `prestamo_db`.`colaterals_loan`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `prestamo_db`.`colaterals_loan` (
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  `colateral_id` INT NOT NULL,
+  `loan_id` INT NOT NULL,
+  PRIMARY KEY (`colateral_id`, `loan_id`),
+  INDEX `loan_id` (`loan_id`),
+  CONSTRAINT `colaterals_loan_fk_colateral_id`
+    FOREIGN KEY (`colateral_id`)
+    REFERENCES `prestamo_db`.`colaterals` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `colaterals_loan_fk_loan_id`
+    FOREIGN KEY (`loan_id`)
+    REFERENCES `prestamo_db`.`loans` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE); 
 
 
 -- -----------------------------------------------------
@@ -567,16 +578,16 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`colaterals_loan_request` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`colateral_id`, `loan_request_id`),
-  INDEX `loan_request_id` (`loan_request_id` ASC) VISIBLE,
+  INDEX `loan_request_id` (`loan_request_id`),
   CONSTRAINT `colaterals_loan_request_ibfk_1`
     FOREIGN KEY (`colateral_id`)
     REFERENCES `prestamo_db`.`colaterals` (`id`),
   CONSTRAINT `colaterals_loan_request_ibfk_2`
     FOREIGN KEY (`loan_request_id`)
     REFERENCES `prestamo_db`.`loan_requests` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 
@@ -593,16 +604,16 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`colaterals_loan_review` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`loan_review_id`, `colateral_id`),
-  INDEX `colateral_id` (`colateral_id` ASC) VISIBLE,
+  INDEX `colateral_id` (`colateral_id`),
   CONSTRAINT `colaterals_loan_review_ibfk_1`
     FOREIGN KEY (`loan_review_id`)
     REFERENCES `prestamo_db`.`loan_reviews` (`id`),
   CONSTRAINT `colaterals_loan_review_ibfk_2`
     FOREIGN KEY (`colateral_id`)
     REFERENCES `prestamo_db`.`colaterals` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -614,9 +625,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`medias` (
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -628,7 +639,7 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`colaterals_media` (
   `ColateralId` INT NOT NULL,
   `MediaId` INT NOT NULL,
   PRIMARY KEY (`ColateralId`, `MediaId`),
-  INDEX `MediaId` (`MediaId` ASC) VISIBLE,
+  INDEX `MediaId` (`MediaId`),
   CONSTRAINT `colaterals_media_ibfk_1`
     FOREIGN KEY (`ColateralId`)
     REFERENCES `prestamo_db`.`colaterals` (`id`)
@@ -639,9 +650,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`colaterals_media` (
     REFERENCES `prestamo_db`.`medias` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -656,13 +667,13 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`comments` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`, `commentor_id`),
-  INDEX `commentor_id` (`commentor_id` ASC) VISIBLE,
+  INDEX `commentor_id` (`commentor_id`),
   CONSTRAINT `comments_ibfk_1`
     FOREIGN KEY (`commentor_id`)
     REFERENCES `prestamo_db`.`employees` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -675,9 +686,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`settings` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -690,17 +701,17 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`configurations` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`, `tenant_id`, `setting_id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `setting_id` (`setting_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `setting_id` (`setting_id`),
   CONSTRAINT `configurations_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`),
   CONSTRAINT `configurations_ibfk_2`
     FOREIGN KEY (`setting_id`)
     REFERENCES `prestamo_db`.`settings` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -714,17 +725,17 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`contracts` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`, `tenant_id`, `media_id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `media_id` (`media_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `media_id` (`media_id`),
   CONSTRAINT `contracts_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`),
   CONSTRAINT `contracts_ibfk_2`
     FOREIGN KEY (`media_id`)
     REFERENCES `prestamo_db`.`medias` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -737,16 +748,16 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`contracts_loan` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`contract_id`, `loan_id`),
-  INDEX `loan_id` (`loan_id` ASC) VISIBLE,
+  INDEX `loan_id` (`loan_id`),
   CONSTRAINT `contracts_loan_ibfk_1`
     FOREIGN KEY (`contract_id`)
     REFERENCES `prestamo_db`.`contracts` (`id`),
   CONSTRAINT `contracts_loan_ibfk_2`
     FOREIGN KEY (`loan_id`)
     REFERENCES `prestamo_db`.`loans` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -761,9 +772,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`discount_periods` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -782,9 +793,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`discounts` (
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `code` (`code` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -798,9 +809,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`features` (
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name` (`name` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -816,9 +827,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`plans` (
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name` (`name` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -830,7 +841,7 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`features_plan` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`feature_id`, `plan_id`),
-  INDEX `plan_id` (`plan_id` ASC) VISIBLE,
+  INDEX `plan_id` (`plan_id`),
   CONSTRAINT `features_plan_ibfk_1`
     FOREIGN KEY (`feature_id`)
     REFERENCES `prestamo_db`.`features` (`id`)
@@ -839,9 +850,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`features_plan` (
     FOREIGN KEY (`plan_id`)
     REFERENCES `prestamo_db`.`plans` (`id`)
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -855,17 +866,17 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`fraud_logs` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `employee_id` (`employee_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `employee_id` (`employee_id`),
   CONSTRAINT `fraud_logs_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`),
   CONSTRAINT `fraud_logs_ibfk_2`
     FOREIGN KEY (`employee_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -883,15 +894,15 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`instalments` (
   `updated_at` DATETIME NOT NULL,
   `loan_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `loan_id` (`loan_id` ASC) VISIBLE,
+  INDEX `loan_id` (`loan_id`),
   CONSTRAINT `instalments_ibfk_1`
     FOREIGN KEY (`loan_id`)
     REFERENCES `prestamo_db`.`loans` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -909,9 +920,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`p_roles` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `role_id` (`role_id` ASC) VISIBLE,
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `modifier_id` (`modifier_id` ASC) VISIBLE,
+  INDEX `role_id` (`role_id`),
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `modifier_id` (`modifier_id`),
   CONSTRAINT `p_roles_ibfk_1`
     FOREIGN KEY (`role_id`)
     REFERENCES `prestamo_db`.`roles` (`id`),
@@ -921,9 +932,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`p_roles` (
   CONSTRAINT `p_roles_ibfk_3`
     FOREIGN KEY (`modifier_id`)
     REFERENCES `prestamo_db`.`employees` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -942,9 +953,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`subscriptions` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `plan_id` (`plan_id` ASC) VISIBLE,
-  INDEX `discount_id` (`discount_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `plan_id` (`plan_id`),
+  INDEX `discount_id` (`discount_id`),
   CONSTRAINT `subscriptions_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`),
@@ -954,9 +965,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`subscriptions` (
   CONSTRAINT `subscriptions_ibfk_3`
     FOREIGN KEY (`discount_id`)
     REFERENCES `prestamo_db`.`discounts` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -969,14 +980,14 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`payment_intents` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`payment_intent_id`),
-  INDEX `payment_intents_subscription_id_index` (`subscription_id` ASC) VISIBLE,
+  INDEX `payment_intents_subscription_id_index` (`subscription_id`),
   CONSTRAINT `payment_intents_ibfk_1`
     FOREIGN KEY (`subscription_id`)
     REFERENCES `prestamo_db`.`subscriptions` (`id`)
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -988,9 +999,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`payment_methods` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1003,13 +1014,13 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`payments` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `payment_method_id` (`payment_method_id` ASC) VISIBLE,
+  INDEX `payment_method_id` (`payment_method_id`),
   CONSTRAINT `payments_ibfk_1`
     FOREIGN KEY (`payment_method_id`)
     REFERENCES `prestamo_db`.`payment_methods` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1022,9 +1033,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`phone_types` (
   `updatedAt` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name` (`name` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1038,9 +1049,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`phones` (
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1054,9 +1065,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`phones_user` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `user_id` (`user_id` ASC) VISIBLE,
-  INDEX `phone_id` (`phone_id` ASC) VISIBLE,
-  INDEX `phone_type_id` (`phone_type_id` ASC) VISIBLE,
+  INDEX `user_id` (`user_id`),
+  INDEX `phone_id` (`phone_id`),
+  INDEX `phone_type_id` (`phone_type_id`),
   CONSTRAINT `phones_user_ibfk_1`
     FOREIGN KEY (`user_id`)
     REFERENCES `prestamo_db`.`people` (`id`)
@@ -1069,9 +1080,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`phones_user` (
     FOREIGN KEY (`phone_type_id`)
     REFERENCES `prestamo_db`.`phone_types` (`id`)
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1087,11 +1098,11 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`previous_address` (
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `borrower_id` (`borrower_id` ASC) VISIBLE,
-  INDEX `employee_id` (`employee_id` ASC) VISIBLE,
-  INDEX `old_address_id` (`old_address_id` ASC) VISIBLE,
-  INDEX `new_address_id` (`new_address_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `borrower_id` (`borrower_id`),
+  INDEX `employee_id` (`employee_id`),
+  INDEX `old_address_id` (`old_address_id`),
+  INDEX `new_address_id` (`new_address_id`),
   CONSTRAINT `previous_address_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`)
@@ -1108,9 +1119,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`previous_address` (
   CONSTRAINT `previous_address_ibfk_5`
     FOREIGN KEY (`new_address_id`)
     REFERENCES `prestamo_db`.`addresses` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1126,11 +1137,11 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`previous_roles` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
-  INDEX `employee_id` (`employee_id` ASC) VISIBLE,
-  INDEX `new_role_id` (`new_role_id` ASC) VISIBLE,
-  INDEX `authorizer_id` (`authorizer_id` ASC) VISIBLE,
-  INDEX `previous_role_id` (`previous_role_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
+  INDEX `employee_id` (`employee_id`),
+  INDEX `new_role_id` (`new_role_id`),
+  INDEX `authorizer_id` (`authorizer_id`),
+  INDEX `previous_role_id` (`previous_role_id`),
   CONSTRAINT `previous_roles_ibfk_1`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`),
@@ -1146,9 +1157,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`previous_roles` (
   CONSTRAINT `previous_roles_ibfk_5`
     FOREIGN KEY (`previous_role_id`)
     REFERENCES `prestamo_db`.`roles` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1165,10 +1176,10 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`replaced_loans_reviewers` (
   `loan_request_borrower_id` INT NULL DEFAULT NULL,
   `reviewer_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `new_reviewer_id` (`new_reviewer_id` ASC) VISIBLE,
-  INDEX `previous_reviewer_id` (`previous_reviewer_id` ASC) VISIBLE,
-  INDEX `modifier_id` (`modifier_id` ASC) VISIBLE,
-  INDEX `loan_request_id` (`loan_request_id` ASC) VISIBLE,
+  INDEX `new_reviewer_id` (`new_reviewer_id`),
+  INDEX `previous_reviewer_id` (`previous_reviewer_id`),
+  INDEX `modifier_id` (`modifier_id`),
+  INDEX `loan_request_id` (`loan_request_id`),
   CONSTRAINT `replaced_loans_reviewers_ibfk_1`
     FOREIGN KEY (`new_reviewer_id`)
     REFERENCES `prestamo_db`.`employees` (`id`),
@@ -1181,9 +1192,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`replaced_loans_reviewers` (
   CONSTRAINT `replaced_loans_reviewers_ibfk_4`
     FOREIGN KEY (`loan_request_id`)
     REFERENCES `prestamo_db`.`loan_requests` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1198,9 +1209,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`setting_history` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `employee_id` (`employee_id` ASC) VISIBLE,
-  INDEX `setting_id` (`setting_id` ASC) VISIBLE,
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
+  INDEX `employee_id` (`employee_id`),
+  INDEX `setting_id` (`setting_id`),
+  INDEX `tenant_id` (`tenant_id`),
   CONSTRAINT `setting_history_ibfk_1`
     FOREIGN KEY (`employee_id`)
     REFERENCES `prestamo_db`.`employees` (`id`),
@@ -1214,9 +1225,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`setting_history` (
     REFERENCES `prestamo_db`.`tenants` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1226,7 +1237,7 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`settings_tenant` (
   `setting_id` INT NOT NULL,
   `tenant_id` INT NOT NULL,
   PRIMARY KEY (`setting_id`, `tenant_id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
   CONSTRAINT `settings_tenant_ibfk_1`
     FOREIGN KEY (`setting_id`)
     REFERENCES `prestamo_db`.`settings` (`id`)
@@ -1237,9 +1248,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`settings_tenant` (
     REFERENCES `prestamo_db`.`tenants` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1253,9 +1264,9 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`tags` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1269,16 +1280,16 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`tags_service` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`tag_id`, `tagger_id`, `service_id`),
-  INDEX `tagger_id` (`tagger_id` ASC) VISIBLE,
+  INDEX `tagger_id` (`tagger_id`),
   CONSTRAINT `tags_service_ibfk_1`
     FOREIGN KEY (`tag_id`)
     REFERENCES `prestamo_db`.`tags` (`id`),
   CONSTRAINT `tags_service_ibfk_2`
     FOREIGN KEY (`tagger_id`)
     REFERENCES `prestamo_db`.`employees` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -1291,16 +1302,16 @@ CREATE TABLE IF NOT EXISTS `prestamo_db`.`tags_tenant` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`tag_id`, `tenant_id`),
-  INDEX `tenant_id` (`tenant_id` ASC) VISIBLE,
+  INDEX `tenant_id` (`tenant_id`),
   CONSTRAINT `tags_tenant_ibfk_1`
     FOREIGN KEY (`tag_id`)
     REFERENCES `prestamo_db`.`tags` (`id`),
   CONSTRAINT `tags_tenant_ibfk_2`
     FOREIGN KEY (`tenant_id`)
     REFERENCES `prestamo_db`.`tenants` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+; -- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb4
+-- COLLATE = utf8mb4_0900_ai_ci;
 
 
 
