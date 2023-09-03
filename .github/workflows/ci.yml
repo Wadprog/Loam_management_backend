@@ -1,9 +1,9 @@
 name: Continous intergration
 on: 
     pull_request:
-        branches: [development, master]
+        branches: [development, main]
     push:
-        branches: [development, master]
+        branches: [development, main]
 
 jobs:
     build:
@@ -38,7 +38,7 @@ jobs:
                 path: ./coverage
 
             - name: Create a Release
-              if: github.event_name == 'pull_request' && github.base_ref == 'master'
+              if: github.event_name == 'pull_request' && github.base_ref == 'main'
               run: npx semantic-release
               env:
                 GITHUB_TOKEN: ${{secrets.TOKEN }}
