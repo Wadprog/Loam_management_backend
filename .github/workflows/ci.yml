@@ -1,0 +1,72 @@
+name: Continous intergration
+on: 
+    pull_request:
+        branches: [development, main]
+    push:
+        branches: [development, main]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Running checkout
+              if: github.event_name == 'pull_request'
+              uses: actions/checkout@v2
+               
+            - name: Use Node.js 12.x
+              if: github.event_name == 'pull_request'
+              uses: actions/setup-node@v1
+              with:
+                node-version: '16.6.1'
+            - name: Install dependencies
+              if: github.event_name == 'pull_request'
+              run: npm ci --ignore-scripts
+
+            - name: check Linting
+              if: github.event_name == 'pull_request'
+              run: npm run lint
+            - name: Run tests
+              if: github.event_name == 'pull_request'
+              run: npm run test
+              env:
+                CI: true
+            - name: Upload coverage
+              if: github.event_name == 'pull_request'
+              uses: actions/upload-artifact@v2
+              with:
+                name: prestamo_api_coverage
+                path: ./coverage
+
+            - name: Create a Release
+              if: github.event_name == 'pull_request' && github.base_ref == 'main'
+              run: npx semantic-release
+              env:
+                GITHUB_TOKEN: ${{secrets.TOKEN }}
+
+            - name: Deploy to Staging
+              if: github.event_name == 'push' && github.ref == 'refs/heads/development'
+              uses: appleboy/ssh-action@v0.1.4
+              with:
+                 host: ${{secrets.DEV_SSH_HOST}}
+                 key: ${{secrets.DEV_SSH_KEY}}
+                 username: ${{secrets.DEV_SSH_USERNAME}}
+                 script: |
+                     cd app
+                     git checkout development
+                     git pull
+                     docker-compose -f docker-compose.stage.yml up --build -d
+
+            - name: Open issue on failure
+              if: failure() && github.event_name == 'pull_request'
+              run: |
+                curl --request POST \
+                --url https://api.github.com/repos/${{github.repository}}/issues \
+                --header 'authorization: Bearer ${{secrets.TOKEN}}' \
+                --header 'content-type: application/json' \
+                --data '{
+                    "title": "Issue found: ${{ github.sha }}",
+                    "body": "Issue automatically created by actions **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
+                    "assignees": ["${{ github.event.pull_request.user.login }}"]
+                }'
+             
+            
