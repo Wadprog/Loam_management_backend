@@ -1,6 +1,6 @@
-version: '3.8'
+version: "3.8"
 services:
-  api: 
+  api:
     env_file:
       - .env
     container_name: prestamo_api
@@ -8,8 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile.stage
     ports:
-      - '4000:4000'
+      - "4000:4000"
     environment:
       - PORT = 4000
     command: ./docker-entrypoint.sh
-   
