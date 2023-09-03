@@ -1,7 +1,7 @@
-FROM node:16.6.1-alpine3.14 as ts-compiler 
+FROM node:16.6.1-alpine3.14 as ts-compiler
 #RUN addgroup app && adduser -S -G app app app
 #RUN mkdir app && chown app:app /app
-#USER app 
+#USER app
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm install
@@ -14,7 +14,7 @@ RUN npm run build
 
 
 
-FROM node:16.6.1-alpine3.14 as ts-remover  
+FROM node:16.6.1-alpine3.14 as ts-remover
 WORKDIR /usr/app
 RUN apk update && apk add bash
 RUN apk add --no-cache bash
@@ -36,5 +36,5 @@ FROM gcr.io/distroless/nodejs:14
 WORKDIR /usr/app
 COPY --from=ts-remover /usr/app .
 USER 1000
-RUN ls -a 
+RUN ls -a
 CMD [ "node","src/bin/index.js"]
