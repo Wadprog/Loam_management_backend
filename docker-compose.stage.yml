@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  api: 
+    env_file:
+      - .env
+    container_name: prestamo_api
+    build:
+      context: .
+      dockerfile: Dockerfile.stage
+    ports:
+      - '4000:4000'
+    environment:
+      - PORT = 4000
+    command: ./docker-entrypoint.sh
+   
