@@ -32,7 +32,8 @@
     "lint:api": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
     "start": "npm run compile && node lib/",
     "jest": "jest --forceExit",
-    "compile": "shx rm -rf lib/ && tsc"
+    "compile": "shx rm -rf lib/ && tsc",
+    "build":"tsc"
   },
   "standard": {
     "env": [

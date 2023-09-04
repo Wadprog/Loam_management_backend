@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
-# RUN mv config/ build/
+
 
 
 
@@ -27,8 +27,8 @@ COPY --from=ts-compiler /usr/app/docker-entrypoint.sh ./
 COPY --from=ts-compiler /usr/app/wait-for ./
 RUN npm install --only=production
 RUN npm install -g sequelize-cli@^6.6.0
-EXPOSE 587
-CMD ["npm","run","start"]
+# EXPOSE 587
+# CMD ["npm","run","start"]
 
 
 
@@ -36,5 +36,4 @@ FROM gcr.io/distroless/nodejs:14
 WORKDIR /usr/app
 COPY --from=ts-remover /usr/app .
 USER 1000
-RUN ls -a 
 CMD [ "node","src/bin/index.js"]

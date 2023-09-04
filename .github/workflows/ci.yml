@@ -58,11 +58,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: pre-build docker image
-        run: |
-          echo "pre-build docker image"
-          ls -R
-          echo "pre-build docker image after ls -R"
+   
       - name: Build and push docker image
         # if: github.event_name == 'push' && github.ref == 'refs/heads/development'
         uses: docker/build-push-action@v2
