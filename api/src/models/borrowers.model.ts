@@ -22,7 +22,7 @@ export default (sequelize: Sequelize, DataTypes: any) => {
     creator_id!: number
 
     static associate(models: any): void {
-      Borrower.hasMany(models.Loans, {})
+      // Borrower.hasMany(models.Loans, {})
       Borrower.belongsTo(models.People, {
         foreignKey: {
           allowNull: false,

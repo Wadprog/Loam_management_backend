@@ -1,14 +1,13 @@
 import { HookContext } from '@feathersjs/feathers'
 import * as authentication from '@feathersjs/authentication'
-// Don't remove this comment. It's needed to format import lines nicely.
+
+import findLoans from './hooks/findLoans'
 
 const attachecCreatorId = (ctx: HookContext) => {
-  // const { data, params } = ctx
-  // const employeeId = params.employee.id
   ctx.data.creator_id = ctx.params.employee.id
-
   return ctx
 }
+
 const { authenticate } = authentication.hooks
 
 export default {
@@ -20,7 +19,7 @@ export default {
         return ctx
       }
     ],
-    find: [],
+    find: findLoans,
     get: [],
     create: [attachecCreatorId],
     update: [],
@@ -30,7 +29,13 @@ export default {
 
   after: {
     all: [],
-    find: [],
+    find: [
+      (ctx: HookContext) => {
+        console.log('called after all hook')
+        console.log(ctx.result)
+        return ctx
+      }
+    ],
     get: [],
     create: [],
     update: [],
@@ -41,7 +46,12 @@ export default {
   error: {
     all: [],
     find: [],
-    get: [],
+    get: [
+      (ctx: HookContext) => {
+        console.log(ctx.error)
+        return ctx
+      }
+    ],
     create: [],
     update: [],
     patch: [],
