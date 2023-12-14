@@ -1,6 +1,9 @@
 # Logs
 logs
 *.log
+.vscode/*
+.vscode/**
+.expo 
 
 # Runtime data
 pids
