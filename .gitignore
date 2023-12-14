@@ -5,6 +5,8 @@ logs
 .vscode/**
 .expo 
 
+
+
 # Runtime data
 pids
 *.pid
